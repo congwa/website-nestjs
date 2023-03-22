@@ -21,9 +21,10 @@ import {
 } from './models';
 import { AuthUser } from './auth-user';
 import { PrismaService } from '../common/services/prisma.service';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
-import Redis from 'ioredis';
+// import { InjectRedis } from '@liaoliaots/nestjs-redis';
+// import Redis from 'ioredis';
 
+// @InjectRedis() private readonly redis: Redis,
 @Injectable()
 export class AuthService {
   constructor(
@@ -31,13 +32,12 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly mailSenderService: MailSenderService,
-    @InjectRedis() private readonly redis: Redis,
   ) {}
 
   //example
-  async setLogined(name: string) {
-    return await this.redis.set(name, 'logined', 'EX', 100);
-  }
+  // async setLogined(name: string) {
+  //   return await this.redis.set(name, 'logined', 'EX', 100);
+  // }
 
   async signup(signupRequest: SignupRequest): Promise<void> {
     const emailVerificationToken = nanoid();
@@ -311,7 +311,7 @@ export class AuthService {
     ) {
       throw new UnauthorizedException();
     }
-    this.setLogined(user.username);
+    // this.setLogined(user.username);
     const payload: JwtPayload = {
       id: user.id,
       email: user.email,

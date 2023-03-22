@@ -6,7 +6,7 @@ import { MailSenderService } from '../mail-sender/mail-sender.service';
 import { UserService } from '../user/user.service';
 import config from '../config';
 import { PrismaService } from '../common/services/prisma.service';
-import { getRedisToken } from '@liaoliaots/nestjs-redis';
+// import { getRedisToken } from '@liaoliaots/nestjs-redis';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -37,14 +37,14 @@ describe('AuthService', () => {
           provide: PrismaService,
           useFactory: () => mockDeep<PrismaService>(),
         },
-        {
-          provide: getRedisToken('default'),
-          useValue: {
-            get,
-            set,
-            del,
-          },
-        },
+        // {
+        //   provide: getRedisToken('default'),
+        //   useValue: {
+        //     get,
+        //     set,
+        //     del,
+        //   },
+        // },
       ],
     }).compile();
 

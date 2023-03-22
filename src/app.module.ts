@@ -8,8 +8,8 @@ import { ThrottlerBehindProxyGuard } from './common/guards/throttler-behind-prox
 import { AppController } from './app.controller';
 import { LoggerModule } from 'nestjs-pino';
 import config from '@/config';
-import { RedisModule } from '@liaoliaots/nestjs-redis';
-import { RedisConfigService } from './common/services/redis-config.service';
+// import { RedisModule } from '@liaoliaots/nestjs-redis';
+// import { RedisConfigService } from './common/services/redis-config.service';
 // import { SocketModule } from './socket/socket.module';
 
 @Module({
@@ -17,9 +17,9 @@ import { RedisConfigService } from './common/services/redis-config.service';
     LoggerModule.forRoot({
       ...config.pino,
     }),
-    RedisModule.forRootAsync({
-      useClass: RedisConfigService,
-    }),
+    // RedisModule.forRootAsync({
+    //   useClass: RedisConfigService,
+    // }),
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 50,
