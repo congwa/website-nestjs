@@ -51,7 +51,6 @@ model User {
   emailVerification EmailVerification?
   passwordReset     PasswordReset?
 
-
   @@map("user")
 }
 
@@ -66,3 +65,20 @@ model Banner {
   @@map("banner")
 }
 
+model Product {
+  id          Int             @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  categoryId  Int
+  category    ProductCategory @relation("ProductCategoryProducts", fields: [categoryId], references: [id])
+}
+
+model ProductCategory {
+  id       Int               @id @default(autoincrement())
+  name     String
+  parent   ProductCategory?  @relation("ProductCategoryChildren", fields: [parentId], references: [id])
+  parentId Int?
+  children ProductCategory[] @relation("ProductCategoryChildren")
+  products Product[]         @relation("ProductCategoryProducts")
+}

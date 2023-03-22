@@ -12,6 +12,8 @@ import config from '@/config';
 // import { RedisModule } from '@liaoliaots/nestjs-redis';
 // import { RedisConfigService } from './common/services/redis-config.service';
 // import { SocketModule } from './socket/socket.module';
+import { ProductCategoryModule } from './product-category/product-category.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import config from '@/config';
     AuthModule,
     BannerModule,
     MailSenderModule,
+    ProductCategoryModule,
+    ProductModule,
     // SocketModule,
   ],
   providers: [
