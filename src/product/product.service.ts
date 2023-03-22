@@ -1,4 +1,4 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
 import { Product } from '@prisma/client';
 
@@ -15,9 +15,9 @@ export class ProductService {
   }
 
   async findOne(id: number): Promise<Product> {
-    const db =  this.prisma.product.findUnique({ where: { id } });
+    const db = await this.prisma.product.findUnique({ where: { id } });
     if(db === null) {
-        return NotAcceptableException;
+      throw new NotFoundException();
     }
     return db
   }
