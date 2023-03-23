@@ -14,6 +14,12 @@ import config from '@/config';
 // import { SocketModule } from './socket/socket.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { ProductModule } from './product/product.module';
+import { ServiceModule } from './service/service.module';
+import { ServiceCategoryModule } from './service-category/service-category.module';
+import { CompaniesService } from './companies/companies.service';
+import { CompaniesModule } from './companies/companies.module';
+import { CategoryController } from './category/category.controller';
+// import { ServiceController } from './service/service.controller';
 
 @Module({
   imports: [
@@ -33,6 +39,9 @@ import { ProductModule } from './product/product.module';
     MailSenderModule,
     ProductCategoryModule,
     ProductModule,
+    ServiceModule,
+    ServiceCategoryModule,
+    CompaniesModule,
     // SocketModule,
   ],
   providers: [
@@ -40,7 +49,8 @@ import { ProductModule } from './product/product.module';
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard,
     },
+    CompaniesService,
   ],
-  controllers: [AppController],
+  controllers: [AppController, CategoryController],
 })
 export class AppModule {}
