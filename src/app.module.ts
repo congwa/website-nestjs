@@ -4,6 +4,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { BannerModule } from './banner/banner.module';
+import { MenuModule } from './menu/menu.module';
+import { NewsModule } from './news/news.module';
+import { ProductModule } from './product/product.module';
 import { MailSenderModule } from './mail-sender/mail-sender.module';
 import { ThrottlerBehindProxyGuard } from './common/guards/throttler-behind-proxy.guard';
 import { AppController } from './app.controller';
@@ -12,14 +15,7 @@ import config from '@/config';
 // import { RedisModule } from '@liaoliaots/nestjs-redis';
 // import { RedisConfigService } from './common/services/redis-config.service';
 // import { SocketModule } from './socket/socket.module';
-import { ProductCategoryModule } from './product-category/product-category.module';
-import { ProductModule } from './product/product.module';
-import { ServiceModule } from './service/service.module';
-import { ServiceCategoryModule } from './service-category/service-category.module';
-import { CompaniesService } from './companies/companies.service';
 import { CompaniesModule } from './companies/companies.module';
-import { CategoryController } from './category/category.controller';
-// import { ServiceController } from './service/service.controller';
 
 @Module({
   imports: [
@@ -37,11 +33,10 @@ import { CategoryController } from './category/category.controller';
     AuthModule,
     BannerModule,
     MailSenderModule,
-    ProductCategoryModule,
-    ProductModule,
-    ServiceModule,
-    ServiceCategoryModule,
     CompaniesModule,
+    MenuModule,
+    ProductModule,
+    NewsModule,
     // SocketModule,
   ],
   providers: [
@@ -49,8 +44,7 @@ import { CategoryController } from './category/category.controller';
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard,
     },
-    CompaniesService,
   ],
-  controllers: [AppController, CategoryController],
+  controllers: [AppController],
 })
 export class AppModule {}

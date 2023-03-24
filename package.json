@@ -63,6 +63,8 @@
     "@nestjs/swagger": "^6.0.5",
     "@nestjs/throttler": "3.0.0",
     "@nestjs/websockets": "^9.0.9",
+    "@nestjsx/crud": "5.0.0-alpha.3",
+    "@nestjsx/crud-request": "5.0.0-alpha.3",
     "@prisma/client": "4.2.1",
     "@socket.io/admin-ui": "^0.4.0",
     "bcrypt": "^5.0.1",

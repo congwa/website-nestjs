@@ -1,33 +1,45 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+// import { PrismaService } from '../common/services/prisma.service';
 import { ProductService } from './product.service';
-import { Product } from '@prisma/client';
+import { Product, Prisma } from '@prisma/client';
 
 @Controller('product')
 export class ProductController {
-  constructor(private productService: ProductService) {}
+  constructor(private readonly productService: ProductService) {}
+
+  @Post()
+  create(@Body() data: Prisma.ProductCreateInput): Promise<Product> {
+    return this.productService.create(data);
+  }
 
   @Get()
-  async findAll(): Promise<Product[]> {
+  findAll(): Promise<Product[]> {
     return this.productService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Product> {
+  findOne(@Param('id') id: string): Promise<Product | null> {
     return this.productService.findOne(Number(id));
   }
 
-  @Post()
-  async create(@Body() data: Omit<Product, 'id'>): Promise<Product> {
-    return this.productService.create(data);
-  }
-
-  @Put(':id')
-  async update(@Param('id') id: string, @Body() data: Omit<Product, 'id'>): Promise<Product> {
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() data: Prisma.ProductUpdateInput,
+  ): Promise<Product> {
     return this.productService.update(Number(id), data);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Product> {
-    return this.productService.delete(Number(id));
+  remove(@Param('id') id: string): Promise<Product> {
+    return this.productService.remove(Number(id));
   }
 }

@@ -64,44 +64,12 @@ model Banner {
 
   @@map("banner")
 }
-
-model Product {
-  id          Int             @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  categoryId  Int
-  category    ProductCategory @relation("ProductCategoryProducts", fields: [categoryId], references: [id])
+model Menu {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  parent_id Int?
 }
-
-model ProductCategory {
-  id       Int               @id @default(autoincrement())
-  name     String
-  parent   ProductCategory?  @relation("ProductCategoryChildren", fields: [parentId], references: [id])
-  parentId Int?
-  children ProductCategory[] @relation("ProductCategoryChildren")
-  products Product[]         @relation("ProductCategoryProducts")
-}
-
-model Service {
-  id          Int             @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  categoryId  Int
-  category    ServiceCategory @relation("ServiceCategoryServices", fields: [categoryId], references: [id])
-}
-
-model ServiceCategory {
-  id       Int               @id @default(autoincrement())
-  name     String
-  parent   ServiceCategory?  @relation("ServiceCategoryChildren", fields: [parentId], references: [id])
-  parentId Int?
-  children ServiceCategory[] @relation("ServiceCategoryChildren")
-  services Service[]         @relation("ServiceCategoryServices")
-}
-
-
 model Company {
   id        Int      @id @default(autoincrement())
   name      String
@@ -114,5 +82,23 @@ model Company {
   createdAt DateTime @default(now())
 }
 
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  image       String
+  menu_id      Int
+}
+
+model News {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String?
+  author_id   Int
+  create_time DateTime
+  update_time DateTime?
+  menu_id     Int
+}
 
 
