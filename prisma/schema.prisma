@@ -58,7 +58,7 @@ model Banner {
   id        Int     @id @default(autoincrement())
   title     String
   imageUrl  String
-  linkUrl   String
+  linkUrl   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -67,38 +67,46 @@ model Banner {
 model Menu {
   id        Int      @id @default(autoincrement())
   name      String
-  url       String
-  parent_id Int?
+  url       String?
+  parentId Int?
+
+  @@map("menu")
 }
 model Company {
   id        Int      @id @default(autoincrement())
-  name      String
-  address   String
-  city      String
-  state     String
-  zip       String
-  phone     String
-  email     String
+  name      String?
+  address   String?
+  city      String?
+  state     String?
+  zip       String?
+  phone     String?
+  email     String?
   createdAt DateTime @default(now())
+
+  @@map("company")
 }
 
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
-  description String
-  price       Float
-  image       String
-  menu_id      Int
+  description String?
+  price       Float?
+  image       String?
+  menuId      Int
+
+  @@map("product")
 }
 
 model News {
   id          Int      @id @default(autoincrement())
   title       String
   content     String?
-  author_id   Int
-  create_time DateTime
-  update_time DateTime?
-  menu_id     Int
+  authorId   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  menuId     Int
+
+  @@map("news")
 }
 
 

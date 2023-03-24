@@ -37,7 +37,7 @@ export class MenuService {
   // 递归方法，获取所有子分类ID
   async getAllIds(ids: number[]): Promise<number[]> {
     const subCategories = await this.prisma.menu.findMany({
-      where: { parent_id: { in: ids } },
+      where: { parentId: { in: ids } },
     });
 
     if (subCategories.length > 0) {

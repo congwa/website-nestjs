@@ -33,7 +33,33 @@ export class ProductService {
   async findAllByCategoryId(id: number): Promise<Product[]> {
     const categoryIds = await this.menuService.getAllIdsByCategoryId(id);
     return this.prisma.product.findMany({
-      where: { menu_id: { in: categoryIds } },
+      where: { menuId: { in: categoryIds } },
     });
+  }
+
+  /**
+   * 获取某个产品分类下所有产品并进行分页处理
+   * @param menuId 产品分类ID
+   * @param page 当前页数
+   * @param pageSize 每页显示数量
+   * @returns Promise<{ list: Product[]; count: number }>
+   */
+  async findAllProductsByMenuId(
+    menuId: number,
+    page: number,
+    pageSize: number,
+  ): Promise<{ list: Product[]; count: number }> {
+    const skip = (page - 1) * pageSize;
+    const [count, products] = await Promise.all([
+      this.prisma.product.count({
+        where: { menuId: menuId },
+      }),
+      this.prisma.product.findMany({
+        where: { menuId: menuId },
+        skip: skip,
+        take: pageSize,
+      }),
+    ]);
+    return { list: products, count };
   }
 }

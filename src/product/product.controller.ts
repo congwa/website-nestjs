@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 // import { PrismaService } from '../common/services/prisma.service';
 import { ProductService } from './product.service';
@@ -41,5 +42,26 @@ export class ProductController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<Product> {
     return this.productService.remove(Number(id));
+  }
+
+  @Get(':menuId')
+  async findAllByMenuId(@Param() params): Promise<Product[]> {
+    const menuId = Number(params.menuId);
+    const products = await this.productService.findAllByCategoryId(menuId);
+    return products;
+  }
+
+  @Get(':menuId')
+  async findAllProductsByMenuId(
+    @Param('menuId') menuId: number,
+    @Query('page') page = 1, // 设置默认值为1
+    @Query('pageSize') pageSize = 10, // 设置默认值为10
+  ): Promise<{ list: Product[]; count: number }> {
+    const result = await this.productService.findAllProductsByMenuId(
+      menuId,
+      page,
+      pageSize,
+    );
+    return result;
   }
 }

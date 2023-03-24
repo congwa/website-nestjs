@@ -33,21 +33,21 @@ export class NewsService {
     });
   }
 
-  async findByMenuId(menu_id: number): Promise<News[]> {
+  async findByMenuId(menuId: number): Promise<News[]> {
     return this.prisma.news.findMany({
-      where: { menu_id },
+      where: { menuId },
     });
   }
 
   async findUsePageByMenuId(
-    menu_id: number,
+    menuId: number,
     options: { page: number; pageSize: number },
   ): Promise<News[]> {
     const { page, pageSize } = options;
     const skip = (page - 1) * pageSize;
     const take = pageSize;
     return this.prisma.news.findMany({
-      where: { menu_id },
+      where: { menuId },
       skip,
       take,
     });
