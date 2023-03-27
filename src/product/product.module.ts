@@ -3,9 +3,9 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { PrismaService } from '../common/services/prisma.service';
 import { MenuService } from '../menu/menu.service';
-
+import { PassportModule } from '@nestjs/passport';
 @Module({
-  imports: [],
+  imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [ProductController],
   providers: [ProductService, PrismaService, MenuService],
 })

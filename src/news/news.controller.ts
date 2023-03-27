@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 // import { PrismaService } from '../common/services/prisma.service';
-import { NewsService } from './news.service'
+import { NewsService } from './news.service';
 import { News } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('news')
 @Controller('news')
@@ -29,16 +31,22 @@ export class NewsController {
   }
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async create(@Body() data: News): Promise<News> {
     return this.newsService.create(data);
   }
 
   @Put(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async update(@Param('id') id: number, @Body() data: News): Promise<News> {
     return this.newsService.update(id, data);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async delete(@Param('id') id: number): Promise<void> {
     return this.newsService.delete(id);
   }

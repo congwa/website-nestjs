@@ -6,10 +6,14 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu, Prisma } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiTags('menu')
 @Controller('menu')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
@@ -25,11 +29,15 @@ export class MenuController {
   }
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async create(@Body() data: Prisma.MenuCreateInput): Promise<Menu> {
     return this.menuService.create(data);
   }
 
   @Put(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async update(
     @Param('id') id: number,
     @Body() data: Prisma.MenuUpdateInput,
@@ -38,6 +46,8 @@ export class MenuController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async delete(@Param('id') id: number): Promise<Menu> {
     return this.menuService.delete(id);
   }

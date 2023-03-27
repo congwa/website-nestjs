@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
 import { Product, Prisma } from '@prisma/client';
 import { MenuService } from '../menu/menu.service';
+import { UpdateProjectRequest } from './models';
 
 @Injectable()
 export class ProductService {
@@ -10,7 +11,7 @@ export class ProductService {
     private menuService: MenuService,
   ) {}
 
-  async create(data: Prisma.ProductCreateInput): Promise<Product> {
+  async create(data: UpdateProjectRequest): Promise<Product> {
     return this.prisma.product.create({ data });
   }
 
@@ -22,7 +23,7 @@ export class ProductService {
     return this.prisma.product.findUnique({ where: { id } });
   }
 
-  async update(id: number, data: Prisma.ProductUpdateInput): Promise<Product> {
+  async update(id: number, data: UpdateProjectRequest): Promise<Product> {
     return this.prisma.product.update({ where: { id }, data });
   }
 

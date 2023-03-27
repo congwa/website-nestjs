@@ -7,17 +7,24 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 // import { PrismaService } from '../common/services/prisma.service';
 import { ProductService } from './product.service';
-import { Product, Prisma } from '@prisma/client';
+import { Product } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { UpdateProjectRequest } from './models';
 
+@ApiTags('product')
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  create(@Body() data: Prisma.ProductCreateInput): Promise<Product> {
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
+  create(@Body() data: UpdateProjectRequest): Promise<Product> {
     return this.productService.create(data);
   }
 
@@ -32,14 +39,18 @@ export class ProductController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   update(
     @Param('id') id: string,
-    @Body() data: Prisma.ProductUpdateInput,
+    @Body() data: UpdateProjectRequest,
   ): Promise<Product> {
     return this.productService.update(Number(id), data);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string): Promise<Product> {
     return this.productService.remove(Number(id));
   }
