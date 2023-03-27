@@ -1,17 +1,5 @@
 import { IsNotEmpty, IsOptional, IsUrl, MaxLength } from 'class-validator';
 
-/**
-model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float?
-  image       String?
-  menuId      Int
-
-  @@map("product")
-}
- */
 
 export class UpdateProjectRequest {
   @IsNotEmpty()
