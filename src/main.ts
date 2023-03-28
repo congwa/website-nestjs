@@ -32,7 +32,7 @@ async function bootstrap() {
   app.use(requestIp.mw());
   const prefix = process.env.API_PREFIX || '/v1';
   app.setGlobalPrefix(prefix);
-
+  app.enableCors();
 
   // Helmet Middleware against known security vulnerabilities
   app.use(helmet());
