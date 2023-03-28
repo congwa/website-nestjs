@@ -7,6 +7,8 @@ import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
 import { isProduction, isTest, logoShow } from './common/utils';
 import config from './config';
+import { HttpExceptionFilter } from './core/filter/http-exception/http-exception.filter';
+import { TransformInterceptor } from './core/interceptor/transform/transform.interceptor';
 
 const loggerInit = new LoggerBuild('InitProject');
 
@@ -24,9 +26,13 @@ async function bootstrap() {
   // Request Validation
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
+  app.useGlobalInterceptors(new TransformInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   app.use(requestIp.mw());
   const prefix = process.env.API_PREFIX || '/v1';
   app.setGlobalPrefix(prefix);
+
 
   // Helmet Middleware against known security vulnerabilities
   app.use(helmet());
