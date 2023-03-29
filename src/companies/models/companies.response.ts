@@ -18,21 +18,21 @@
  */
 
 export class CompaniesResponse {
-    id: number;
+  id: number;
 
-    name: string | null;
+  name: string | null;
 
-    address: string | null;
+  address: string | null;
 
-    city: string | null;
+  city: string | null;
 
-    state: string | null;
+  state: string | null;
 
-    zip: string | null;
+  zip: string | null;
 
-    phone: string | null;
+  phone: string | null;
 
-    email: string | null;
+  email: string | null;
 
-    createdAt: Date | null;
+  createdAt: Date | null;
 }

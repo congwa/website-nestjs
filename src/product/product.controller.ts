@@ -26,20 +26,20 @@ export class ProductController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
-  @ApiOkResponse({type: ProjectResponse})
+  @ApiOkResponse({ type: ProjectResponse })
   @UseGuards(AuthGuard())
   create(@Body() data: UpdateProjectRequest): Promise<Product> {
     return this.productService.create(data);
   }
 
   @Get()
-  @ApiOkResponse({type: ProjectResponse, isArray: true})
+  @ApiOkResponse({ type: ProjectResponse, isArray: true })
   findAll(): Promise<Product[]> {
     return this.productService.findAll();
   }
 
   @Get(':id')
-  @ApiOkResponse({type: ProjectResponse})
+  @ApiOkResponse({ type: ProjectResponse })
   findOne(@Param('id') id: string): Promise<Product | null> {
     return this.productService.findOne(Number(id));
   }
@@ -56,14 +56,14 @@ export class ProductController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @ApiOkResponse({type: ProjectResponse, isArray: true})
+  @ApiOkResponse({ type: ProjectResponse, isArray: true })
   @UseGuards(AuthGuard())
   remove(@Param('id') id: string): Promise<Product> {
     return this.productService.remove(Number(id));
   }
 
   @Get('menuAll/:menuId')
-  @ApiOkResponse({type: ProjectResponse, isArray: true})
+  @ApiOkResponse({ type: ProjectResponse, isArray: true })
   async findAllByMenuId(@Param() params): Promise<Product[]> {
     const menuId = Number(params.menuId);
     const products = await this.productService.findAllByCategoryId(menuId);
@@ -71,7 +71,7 @@ export class ProductController {
   }
 
   @Get('menuPage/:menuId')
-  @ApiOkResponse({type: ProjectResponse, isArray: true})
+  @ApiOkResponse({ type: ProjectResponse, isArray: true })
   async findAllProductsByMenuId(
     @Param('menuId') menuId: number,
     @Query('page') page = 1, // 设置默认值为1

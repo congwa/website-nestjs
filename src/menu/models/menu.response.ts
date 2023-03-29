@@ -1,11 +1,9 @@
-
-
 export class MenuResponse {
-    id: number;
+  id: number;
 
-    name: string;
+  name: string;
 
-    url: string | null;
+  url: string | null;
 
-    parentId: number | null;
+  parentId: number | null;
 }

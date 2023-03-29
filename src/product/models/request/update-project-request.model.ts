@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsOptional, IsUrl, MaxLength } from 'class-validator';
 
-
 export class UpdateProjectRequest {
   @IsNotEmpty()
   @MaxLength(20)

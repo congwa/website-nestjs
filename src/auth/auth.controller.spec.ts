@@ -55,5 +55,4 @@ describe('Auth Controller', () => {
     expect(controller).toBeDefined();
     expect(spyService).toBeDefined();
   });
-  
 });

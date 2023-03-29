@@ -16,6 +16,7 @@ import config from '@/config';
 // import { RedisConfigService } from './common/services/redis-config.service';
 // import { SocketModule } from './socket/socket.module';
 import { CompaniesModule } from './companies/companies.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CompaniesModule } from './companies/companies.module';
     MenuModule,
     ProductModule,
     NewsModule,
+    UploadModule,
     // SocketModule,
   ],
   providers: [

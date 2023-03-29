@@ -1,16 +1,15 @@
-
 export class NewsResponse {
-    id: number;
+  id: number;
 
-    title: string;
+  title: string;
 
-    content: string | null;
+  content: string | null;
 
-    authorId: number | null;
+  authorId: number | null;
 
-    menuId: number;
+  menuId: number;
 
-    createdAt: Date | null;
+  createdAt: Date | null;
 
-    updatedAt: Date | null;
+  updatedAt: Date | null;
 }

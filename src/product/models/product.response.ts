@@ -1,14 +1,13 @@
-
 export class ProjectResponse {
-    id: number;
+  id: number;
 
-    name: string;
+  name: string;
 
-    description: string;
+  description: string;
 
-    price: number | null;
+  price: number | null;
 
-    image: string | null;
+  image: string | null;
 
-    menuId: number | null;
+  menuId: number | null;
 }

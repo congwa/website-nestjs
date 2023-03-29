@@ -9,7 +9,7 @@ import {
   Query,
   UseGuards,
   HttpCode,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
 // import { PrismaService } from '../common/services/prisma.service';
 import { NewsService } from './news.service';
@@ -24,13 +24,13 @@ export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
   @Get()
-  @ApiOkResponse({ type: NewsResponse, isArray: true})
+  @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findAll(): Promise<News[]> {
     return this.newsService.findAll();
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: NewsResponse})
+  @ApiOkResponse({ type: NewsResponse })
   async findOne(@Param('id') id: number): Promise<News | null> {
     return this.newsService.findOne(id);
   }
@@ -38,7 +38,7 @@ export class NewsController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: NewsResponse})
+  @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
   async create(@Body() data: UpdateNewsRequest): Promise<News> {
     return this.newsService.create(data);
@@ -46,28 +46,31 @@ export class NewsController {
 
   @Put(':id')
   @ApiBearerAuth()
-  @ApiOkResponse({ type: NewsResponse})
+  @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
-  async update(@Param('id') id: number, @Body() data: UpdateNewsRequest): Promise<News> {
+  async update(
+    @Param('id') id: number,
+    @Body() data: UpdateNewsRequest,
+  ): Promise<News> {
     return this.newsService.update(id, data);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
-  @ApiOkResponse({ type: NewsResponse})
+  @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
   async delete(@Param('id') id: number): Promise<void> {
     return this.newsService.delete(id);
   }
 
   @Get('menu/:menuId')
-  @ApiOkResponse({ type: NewsResponse, isArray: true})
+  @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findByMenuId(@Param('menuId') menuId: number): Promise<News[]> {
     return this.newsService.findByMenuId(menuId);
   }
 
   @Get('menu/:menuId')
-  @ApiOkResponse({ type: NewsResponse, isArray: true})
+  @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findUsePageByMenuId(
     @Param('menuId') menuId: number,
     @Query('page') page = 1,
