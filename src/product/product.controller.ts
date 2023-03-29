@@ -62,7 +62,7 @@ export class ProductController {
     return this.productService.remove(Number(id));
   }
 
-  @Get(':menuId')
+  @Get('menuAll/:menuId')
   @ApiOkResponse({type: ProjectResponse, isArray: true})
   async findAllByMenuId(@Param() params): Promise<Product[]> {
     const menuId = Number(params.menuId);
@@ -70,7 +70,7 @@ export class ProductController {
     return products;
   }
 
-  @Get(':menuId')
+  @Get('menuPage/:menuId')
   @ApiOkResponse({type: ProjectResponse, isArray: true})
   async findAllProductsByMenuId(
     @Param('menuId') menuId: number,
