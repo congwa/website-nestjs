@@ -21,7 +21,7 @@ export class UpdateBannerRequest {
   title: string;
 
   @IsNotEmpty()
-  @IsUrl()
+  // @IsUrl()
   imageUrl: string;
 
   @IsOptional()
