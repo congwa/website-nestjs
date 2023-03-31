@@ -191,3 +191,21 @@ model User {
 ```
 
 以上是Prisma schema中常见的装饰器及其使用方法。
+
+
+BadRequestException — 400
+UnauthorizedException — 401
+ForbiddenException — 403
+NotFoundException — 404
+NotAcceptableException — 406
+RequestTimeoutException — 408
+ConflictException — 409
+GoneException — 410
+PayloadTooLargeException — 413
+UnsupportedMediaTypeException — 415
+UnprocessableEntityException — 422
+InternalServerErrorException — 500
+NotImplementedException — 501
+BadGatewayException — 502
+ServiceUnavailableException — 503
+GatewayTimeoutException — 504

@@ -21,8 +21,8 @@ export class CompaniesController {
 
   @Get()
   @ApiOkResponse({ type: CompaniesResponse })
-  async getAllCompanies(): Promise<Company[]> {
-    return this.companiesService.getAllCompanies();
+  async getCompanDetail(): Promise<Company | null> {
+    return this.companiesService.getCompanDetail();
   }
 
   @Get(':id')

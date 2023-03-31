@@ -15,15 +15,29 @@ export class UpdateCompaniesRequest {
   @IsOptional()
   state?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   zip?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @MaxLength(11)
   phone?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
   @MaxLength(20)
   email?: string;
+
+  @IsOptional()
+  description?: string;
+}
+
+export const DetaultCompanies = {
+  name: '',
+  address: '',
+  city: '',
+  state: '',
+  zip: '',
+  phone: '',
+  email: '',
+  description: '',
 }

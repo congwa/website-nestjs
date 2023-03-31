@@ -81,6 +81,7 @@ model Company {
   zip       String?
   phone     String?
   email     String?
+  description String?
   createdAt DateTime @default(now())
 
   @@map("company")

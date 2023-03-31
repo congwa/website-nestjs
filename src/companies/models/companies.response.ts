@@ -1,21 +1,4 @@
-/**
- * 
- * 
- * model Company {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  address   String?
-  city      String?
-  state     String?
-  zip       String?
-  phone     String?
-  email     String?
-  createdAt DateTime @default(now())
 
-  @@map("company")
-}
-
- */
 
 export class CompaniesResponse {
   id: number;
@@ -33,6 +16,8 @@ export class CompaniesResponse {
   phone: string | null;
 
   email: string | null;
+
+  description: string | null;
 
   createdAt: Date | null;
 }
