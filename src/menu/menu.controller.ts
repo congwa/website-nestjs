@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Put,
+  Patch,
   Delete,
   Param,
   Body,
@@ -42,7 +43,7 @@ export class MenuController {
     return this.menuService.create(data);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiBearerAuth()
   @ApiOkResponse({ type: MenuResponse })
   @UseGuards(AuthGuard())

@@ -1,6 +1,8 @@
-import { IsNotEmpty, IsOptional, MaxLength, IsEmail } from 'class-validator';
+import { IsOptional, MaxLength, IsEmail } from 'class-validator';
 
 export class UpdateCompaniesRequest {
+
+  @IsOptional()
   @MaxLength(20)
   name: string;
 
@@ -13,13 +15,15 @@ export class UpdateCompaniesRequest {
   city?: string;
 
   @IsOptional()
+  @MaxLength(50)
   state?: string;
 
   @IsOptional()
+  @MaxLength(50)
   zip?: string;
 
   @IsOptional()
-  @MaxLength(11)
+  @MaxLength(51)
   phone?: string;
 
   @IsOptional()

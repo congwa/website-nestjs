@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   ParseIntPipe,
   Put,
   UnauthorizedException,
@@ -22,7 +23,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiBearerAuth()
-  @Put(':id')
+  @Patch(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard())
   async updateUser(

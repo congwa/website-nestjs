@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Patch,
   UseGuards,
 } from '@nestjs/common';
 import { Company } from '@prisma/client';
@@ -41,22 +42,17 @@ export class CompaniesController {
     return this.companiesService.createCompany(data);
   }
 
-  @Put(':id')
+ 
+  @Patch(':id')
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CompaniesResponse })
   @UseGuards(AuthGuard())
+  @ApiOkResponse({ type: CompaniesResponse })
   async updateCompany(
     @Param('id') id: number,
     @Body() data: UpdateCompaniesRequest,
   ): Promise<Company> {
+    console.log(data, '-------------------------------');
     return this.companiesService.updateCompany(id, data);
   }
 
-  @Delete(':id')
-  @ApiBearerAuth()
-  @ApiOkResponse({ type: CompaniesResponse })
-  @UseGuards(AuthGuard())
-  async deleteCompany(@Param('id') id: number): Promise<Company> {
-    return this.companiesService.deleteCompany(id);
-  }
 }

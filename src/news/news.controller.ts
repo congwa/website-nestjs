@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Put,
+  Patch,
   Param,
   Delete,
   Query,
@@ -44,7 +45,7 @@ export class NewsController {
     return this.newsService.create(data);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())

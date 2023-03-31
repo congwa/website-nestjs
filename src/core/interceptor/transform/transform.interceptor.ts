@@ -12,7 +12,7 @@ export class TransformInterceptor implements NestInterceptor {
     console.log(22)
     return next.handle().pipe(
       map((data) => {
-        if (data && typeof data === 'object') {
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
           const newData = {};
           for (const key in data) {
             if (data[key] === null) {
