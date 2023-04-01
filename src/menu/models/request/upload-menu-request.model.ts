@@ -7,7 +7,13 @@ export class UpdateMenuRequest {
 
   @IsOptional()
   @IsNotEmpty()
-  @IsUrl()
+  @IsUrl({
+    protocols: ['http', 'https'],
+    require_tld: false,
+    require_protocol: false,
+  },{
+    message: '请输入正确的url'
+  })
   url?: string;
 
   @IsOptional()

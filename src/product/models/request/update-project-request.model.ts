@@ -13,7 +13,13 @@ export class UpdateProjectRequest {
   price?: number;
 
   @IsOptional()
-  @IsUrl()
+  @IsUrl({
+    protocols: ['http', 'https'],
+    require_tld: false,
+    require_protocol: false,
+  },{
+    message: '请输入正确的url'
+  })
   image?: string;
 
   @IsNotEmpty()

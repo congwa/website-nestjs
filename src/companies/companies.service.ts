@@ -39,7 +39,6 @@ export class CompaniesService {
     id: number,
     data: UpdateCompaniesRequest,
   ): Promise<Company> {
-    console.log(data, '-----')
     return this.prisma.company.update({ where: { id }, data });
   }
 

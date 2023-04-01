@@ -21,10 +21,22 @@ export class UpdateBannerRequest {
   title: string;
 
   @IsNotEmpty()
-  // @IsUrl()
+  @IsUrl({
+    protocols: ['http', 'https'],
+    require_tld: false,
+    require_protocol: false,
+  },{
+    message: '请输入正确的url'
+  })
   imageUrl: string;
 
   @IsOptional()
-  @IsUrl()
+  @IsUrl({
+    protocols: ['http', 'https'],
+    require_tld: false,
+    require_protocol: false,
+  },{
+    message: '请输入正确的url'
+  })
   linkUrl?: string;
 }
