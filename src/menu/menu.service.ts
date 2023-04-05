@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
 import { Menu, Prisma } from '@prisma/client';
 
@@ -30,22 +34,22 @@ export class MenuService {
 
   async delete(id: number): Promise<Menu | null> {
     const menu = await this.prisma.menu.findUnique({ where: { id } });
-    
+
     // 如果菜单不存在父菜单，则删除当前菜单及其所有子菜单
-    async function deleteMenu(id: number): Promise<void> {
-      const subMenus = await this.prisma.menu.findMany({ where: { parentId: id } });
+    const deleteMenu = async (id: number): Promise<void> => {
+      const subMenus = await this.prisma.menu.findMany({
+        where: { parentId: id },
+      });
       for (const subMenu of subMenus) {
         await deleteMenu(subMenu.id);
       }
       await this.prisma.menu.delete({ where: { id } });
-    }
+    };
 
     await deleteMenu(id);
-    
-  
+
     return menu;
   }
-  
 
   // 递归方法，获取所有子分类ID
   async getAllIds(ids: number[]): Promise<number[]> {
