@@ -59,7 +59,7 @@ export class MenuController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: MenuResponse })
   @UseGuards(AuthGuard())
-  async delete(@Param('id') id: number): Promise<Menu> {
+  async delete(@Param('id') id: number): Promise<Menu | null> {
     return this.menuService.delete(id);
   }
 }
