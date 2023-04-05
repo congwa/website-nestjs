@@ -40,7 +40,6 @@ export class MenuController {
   @UseGuards(AuthGuard())
   @ApiOkResponse({ type: MenuResponse })
   async create(@Body() data: UpdateMenuRequest): Promise<Menu> {
-    console.log(data, '----')
     return this.menuService.create(data);
   }
 
