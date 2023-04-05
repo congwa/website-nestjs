@@ -6,7 +6,6 @@ export class UpdateMenuRequest {
   name: string;
 
   @IsOptional()
-  @IsNotEmpty()
   @IsUrl({
     protocols: ['http', 'https'],
     require_tld: false,
