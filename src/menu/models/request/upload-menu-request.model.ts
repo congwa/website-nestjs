@@ -1,7 +1,9 @@
-import { IsNotEmpty, IsOptional, IsUrl, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUrl, Max, MaxLength } from 'class-validator';
 
 export class UpdateMenuRequest {
-  @IsNotEmpty()
+  @IsNotEmpty({
+    message: 'name不能为空'
+  })
   @MaxLength(20)
   name: string;
 
@@ -16,7 +18,6 @@ export class UpdateMenuRequest {
   url?: string;
 
   @IsOptional()
-  @IsNotEmpty()
-  @MaxLength(10)
+  @Max(10000, {message: 'Max 10000'})
   parentId?: number;
 }

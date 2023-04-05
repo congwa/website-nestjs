@@ -3,6 +3,7 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  Logger
 } from '@nestjs/common';
 
 @Catch(HttpException)
@@ -11,10 +12,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp(); // 获取请求上下文
     const response = ctx.getResponse(); // 获取请求上下文中的 response对象
     const status = exception.getStatus(); // 获取异常状态码
+    
+    // TODO 这里response是私有的，不知道该咋写了
+    const exceptionStr = JSON.stringify(exception)
+    const exceptionJSON = JSON.parse(exceptionStr);
+    Logger.error(exceptionStr);
 
+    console.log(exception,'------------------------------------', exception.message)
     // 设置错误信息
-    const message = exception.message
-      ? exception.message
+    const message = exceptionJSON?.response?.message
+      ? exceptionJSON?.response?.message
       : `${status >= 500 ? 'Service Error' : 'Client Error'}`;
     const errorResponse = {
       data: {},

@@ -9,7 +9,6 @@ import { concatMap ,map, Observable } from 'rxjs';
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    console.log(22)
     return next.handle().pipe(
       map((data) => {
         if (data && typeof data === 'object' && !Array.isArray(data)) {
