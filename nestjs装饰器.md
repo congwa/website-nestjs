@@ -207,5 +207,5 @@ UnprocessableEntityException — 422
 InternalServerErrorException — 500
 NotImplementedException — 501
 BadGatewayException — 502
-ServiceUnavailableException — 503
+ServiceUnavailableException — 503 1
 GatewayTimeoutException — 504
