@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength, Max } from 'class-validator';
 
 export class UpdateNewsRequest {
   @IsNotEmpty()
@@ -13,6 +13,6 @@ export class UpdateNewsRequest {
   authorId?: number;
 
   @IsNotEmpty()
-  @MaxLength(10)
+  @Max(10000000)
   menuId: number;
 }

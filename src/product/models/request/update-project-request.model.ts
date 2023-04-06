@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsUrl, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUrl, MaxLength, Max } from 'class-validator';
 
 export class UpdateProjectRequest {
   @IsNotEmpty()
@@ -26,6 +26,6 @@ export class UpdateProjectRequest {
   image?: string;
 
   @IsNotEmpty()
-  @MaxLength(10)
+  @Max(1000000)
   menuId: number;
 }
