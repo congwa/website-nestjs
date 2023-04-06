@@ -49,25 +49,19 @@ export class NewsService {
   }
 
   async create(data: UpdateNewsRequest): Promise<News> {
-    return this.prisma.news.create({ data, include: { menu: true } });
+    return this.prisma.news.create({ data });
   }
 
   async update(id: number, data: UpdateNewsRequest): Promise<News> {
     return this.prisma.news.update({
       where: { id },
       data,
-      include: {
-        menu: true,
-      },
     });
   }
 
-  async delete(id: number): Promise<void> {
-    await this.prisma.news.delete({
+  async delete(id: number): Promise<News> {
+    return await this.prisma.news.delete({
       where: { id },
-      include: {
-        menu: true,
-      },
     });
   }
 

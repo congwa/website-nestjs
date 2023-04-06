@@ -103,8 +103,9 @@ export class NewsController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
-  async delete(@Param('id') id: number): Promise<void> {
+  async delete(@Param('id') id: number): Promise<NewsResponse> {
     const news = await this.newsService.delete(id);
+    console.log(news, '-------------------------');
     return new MenuResponsePipe().transform(news);
   }
 
