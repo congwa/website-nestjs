@@ -82,7 +82,6 @@ export class ProductController {
     @Query('menuId', new OptionalParseIntPipe())
     menuId: number | undefined = undefined,
   ): Promise<Product[]> {
-    console.log('-----', menuId);
     const projects = await this.productService.findAll(pageSize, page, {
       name,
       menuId,

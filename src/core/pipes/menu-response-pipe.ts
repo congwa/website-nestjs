@@ -3,7 +3,6 @@ import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
 @Injectable()
 export class MenuResponsePipe implements PipeTransform {
   transform(value: any) {
-    console.log(value);
     if (Array.isArray(value)) {
       return this.formatArray(value);
     } else if (Object.keys(value).length > 0) {
