@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
-import { Product } from '@prisma/client';
+import { Product, Prisma } from '@prisma/client';
 import { MenuService } from '../menu/menu.service';
 import {
   UpdateProjectRequest,
@@ -19,8 +19,36 @@ export class ProductService {
     return this.prisma.product.create({ data });
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+  async findAll(
+    pageSize: number,
+    pageNum: number,
+    filters: { name?: string; menuId?: number },
+  ): Promise<{ list: Product[]; count: number }> {
+    const where: Prisma.ProductWhereInput = {};
+
+    if (filters.name) {
+      where.name = {
+        contains: filters.name,
+      };
+    }
+
+    if (filters.menuId) {
+      where.menuId = filters.menuId;
+    }
+
+    const [list, count] = await Promise.all([
+      this.prisma.product.findMany({
+        where,
+        skip: (pageNum - 1) * pageSize,
+        take: pageSize,
+        orderBy: {
+          id: 'desc',
+        },
+      }),
+      this.prisma.product.count({ where }),
+    ]);
+
+    return { list, count };
   }
 
   async findOne(id: number): Promise<Product | null> {

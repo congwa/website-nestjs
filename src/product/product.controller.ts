@@ -14,7 +14,12 @@ import {
 // import { PrismaService } from '../common/services/prisma.service';
 import { ProductService } from './product.service';
 import { Product } from '@prisma/client';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOkResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectResponse, UpdateProjectRequest } from './models';
 import { MenuResponsePipe } from '@/core/pipes/menu-response-pipe';
@@ -35,9 +40,39 @@ export class ProductController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    description: '产品名称',
+  })
+  @ApiQuery({
+    name: 'menuId',
+    required: false,
+    description: '菜单 ID',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    type: Number,
+    required: false,
+    description: '每页记录数，默认为 10',
+  })
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description: '当前页码，默认为 1',
+  })
   @ApiOkResponse({ type: ProjectResponse, isArray: true })
-  async findAll(): Promise<Product[]> {
-    const projects = await this.productService.findAll();
+  async findAll(
+    @Query('pageSize') pageSize = 10,
+    @Query('pageNum') pageNum = 1,
+    @Query('name') name?: string,
+    @Query('menuId') menuId?: number,
+  ): Promise<Product[]> {
+    const projects = await this.productService.findAll(pageSize, pageNum, {
+      name,
+      menuId,
+    });
     return new MenuResponsePipe().transform(projects);
   }
 

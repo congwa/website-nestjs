@@ -14,7 +14,12 @@ import {
 // import { PrismaService } from '../common/services/prisma.service';
 import { NewsService } from './news.service';
 import { News } from '@prisma/client';
-import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOkResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateNewsRequest, NewsResponse, NewsResponsePage } from './models';
 import { MenuResponsePipe } from '@/core/pipes/menu-response-pipe';
@@ -26,9 +31,39 @@ export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
   @Get()
+  @ApiQuery({
+    name: 'title',
+    required: false,
+    description: '新闻标题',
+  })
+  @ApiQuery({
+    name: 'menuId',
+    required: false,
+    description: '菜单 ID',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    type: Number,
+    required: false,
+    description: '每页记录数，默认为 10',
+  })
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description: '当前页码，默认为 1',
+  })
   @ApiOkResponse({ type: NewsResponse, isArray: true })
-  async findAll(): Promise<News[]> {
-    const news = await this.newsService.findAll();
+  async findAll(
+    @Query('pageSize') pageSize = 10,
+    @Query('pageNum') pageNum = 1,
+    @Query('title') title?: string,
+    @Query('menuId') menuId?: number,
+  ): Promise<News[]> {
+    const news = await this.newsService.findAll(pageSize, pageNum, {
+      title,
+      menuId,
+    });
     return new MenuResponsePipe().transform(news);
   }
 
