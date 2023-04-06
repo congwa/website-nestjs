@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Patch,
   Param,
   Delete,
@@ -17,8 +16,10 @@ import { NewsService } from './news.service';
 import { News } from '@prisma/client';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { UpdateNewsRequest, NewsResponse } from './models';
+import { UpdateNewsRequest, NewsResponse, NewsResponsePage } from './models';
+import { MenuResponsePipe } from '@/core/pipes/menu-response-pipe';
 
+// ApiOkResponse有坑，使用了ApiOkResponse，那么usePipes处理返回值会有问题
 @ApiTags('news')
 @Controller('news')
 export class NewsController {
@@ -27,13 +28,15 @@ export class NewsController {
   @Get()
   @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findAll(): Promise<News[]> {
-    return this.newsService.findAll();
+    const news = await this.newsService.findAll();
+    return new MenuResponsePipe().transform(news);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: NewsResponse })
   async findOne(@Param('id') id: number): Promise<News | null> {
-    return this.newsService.findOne(id);
+    const news = this.newsService.findOne(id);
+    return new MenuResponsePipe().transform(news);
   }
 
   @Post()
@@ -42,7 +45,8 @@ export class NewsController {
   @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
   async create(@Body() data: UpdateNewsRequest): Promise<News> {
-    return this.newsService.create(data);
+    const news = await this.newsService.create(data);
+    return new MenuResponsePipe().transform(news);
   }
 
   @Patch(':id')
@@ -53,7 +57,8 @@ export class NewsController {
     @Param('id') id: number,
     @Body() data: UpdateNewsRequest,
   ): Promise<News> {
-    return this.newsService.update(id, data);
+    const news = await this.newsService.update(id, data);
+    return new MenuResponsePipe().transform(news);
   }
 
   @Delete(':id')
@@ -61,13 +66,15 @@ export class NewsController {
   @ApiOkResponse({ type: NewsResponse })
   @UseGuards(AuthGuard())
   async delete(@Param('id') id: number): Promise<void> {
-    return this.newsService.delete(id);
+    const news = await this.newsService.delete(id);
+    return new MenuResponsePipe().transform(news);
   }
 
   @Get('menu/:menuId')
   @ApiOkResponse({ type: NewsResponse, isArray: true })
-  async findByMenuId(@Param('menuId') menuId: number): Promise<News[]> {
-    return this.newsService.findByMenuId(menuId);
+  async findByMenuId(@Param('menuId') menuId: number): Promise<NewsResponse[]> {
+    const newsList = await this.newsService.findByMenuId(menuId);
+    return new MenuResponsePipe().transform(newsList);
   }
 
   @Get('menu/:menuId')
@@ -76,7 +83,7 @@ export class NewsController {
     @Param('menuId') menuId: number,
     @Query('page') page = 1,
     @Query('pageSize') pageSize = 10,
-  ): Promise<News[]> {
+  ): Promise<NewsResponsePage> {
     return this.newsService.findUsePageByMenuId(menuId, { page, pageSize });
   }
 }

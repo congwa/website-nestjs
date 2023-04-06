@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
-import { Product, Prisma } from '@prisma/client';
+import { Product } from '@prisma/client';
 import { MenuService } from '../menu/menu.service';
-import { UpdateProjectRequest } from './models';
+import {
+  UpdateProjectRequest,
+  ProjectsResponsePage,
+  ProjectResponse,
+} from './models';
 
 @Injectable()
 export class ProductService {
@@ -43,13 +47,13 @@ export class ProductService {
    * @param menuId 产品分类ID
    * @param page 当前页数
    * @param pageSize 每页显示数量
-   * @returns Promise<{ list: Product[]; count: number }>
+   * @returns Promise<CompaniesResponsePage>
    */
   async findAllProductsByMenuId(
     menuId: number,
     page: number,
     pageSize: number,
-  ): Promise<{ list: Product[]; count: number }> {
+  ): Promise<ProjectsResponsePage> {
     const skip = (page - 1) * pageSize;
     const [count, products] = await Promise.all([
       this.prisma.product.count({
@@ -59,8 +63,22 @@ export class ProductService {
         where: { menuId: menuId },
         skip: skip,
         take: pageSize,
+        include: {
+          menu: true,
+        },
       }),
     ]);
-    return { list: products, count };
+    const projectList: ProjectResponse[] = products.map(
+      ({ id, name, description, price, image, menu }) => ({
+        id,
+        name,
+        description,
+        price,
+        image,
+        menuId: menu.id,
+        menuName: menu.name,
+      }),
+    );
+    return { list: projectList, count };
   }
 }

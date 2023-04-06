@@ -55,7 +55,7 @@ model User {
 }
 
 model Banner {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   imageUrl  String
   linkUrl   String?
@@ -64,50 +64,54 @@ model Banner {
 
   @@map("banner")
 }
+
 model Menu {
-  id        Int      @id @default(autoincrement())
-  name      String
-  url       String?
+  id       Int       @id @default(autoincrement())
+  name     String
+  url      String?
   parentId Int?
+  Product  Product[]
+  News     News[]
 
   @@map("menu")
 }
+
 model Company {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  address   String?
-  city      String?
-  state     String?
-  zip       String?
-  phone     String?
-  email     String?
+  id          Int      @id @default(autoincrement())
+  name        String?
+  address     String?
+  city        String?
+  state       String?
+  zip         String?
+  phone       String?
+  email       String?
   description String?
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   @@map("company")
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
-  description String?
+  description String
   price       Float?
   image       String?
   menuId      Int
+  menu        Menu    @relation(fields: [menuId], references: [id], onDelete: Cascade)
 
   @@map("product")
 }
 
 model News {
-  id          Int      @id @default(autoincrement())
-  title       String
-  content     String?
-  authorId   Int?
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  authorId  Int?
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  menuId     Int
+  menuId    Int
+  menu      Menu      @relation(fields: [menuId], references: [id], onDelete: Cascade)
 
   @@map("news")
 }
-
-

@@ -1,7 +1,6 @@
 import { IsOptional, MaxLength, IsEmail } from 'class-validator';
 
 export class UpdateCompaniesRequest {
-
   @IsOptional()
   @MaxLength(20)
   name: string;
@@ -35,7 +34,7 @@ export class UpdateCompaniesRequest {
   description?: string;
 }
 
-export const DetaultCompanies = {
+export const DefaultCompanies = {
   name: '',
   address: '',
   city: '',
@@ -44,4 +43,4 @@ export const DetaultCompanies = {
   phone: '',
   email: '',
   description: '',
-}
+};

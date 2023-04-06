@@ -6,7 +6,7 @@ export class UpdateNewsRequest {
   title: string;
 
   @IsNotEmpty()
-  content?: string;
+  content: string;
 
   @IsOptional()
   @MaxLength(10)

@@ -1,2 +1,2 @@
 export { UpdateProjectRequest } from './request/update-project-request.model';
-export { ProjectResponse } from './product.response';
+export { ProjectResponse, ProjectsResponsePage } from './product.response';

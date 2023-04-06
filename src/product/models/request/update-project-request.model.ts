@@ -6,20 +6,23 @@ export class UpdateProjectRequest {
   name: string;
 
   @IsNotEmpty()
-  description?: string;
+  description: string;
 
   @IsOptional()
   @MaxLength(10)
   price?: number;
 
   @IsOptional()
-  @IsUrl({
-    protocols: ['http', 'https'],
-    require_tld: false,
-    require_protocol: false,
-  },{
-    message: '请输入正确的url'
-  })
+  @IsUrl(
+    {
+      protocols: ['http', 'https'],
+      require_tld: false,
+      require_protocol: false,
+    },
+    {
+      message: '请输入正确的url',
+    },
+  )
   image?: string;
 
   @IsNotEmpty()

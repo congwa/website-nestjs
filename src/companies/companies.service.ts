@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { Company } from '@prisma/client';
-import { UpdateCompaniesRequest, DetaultCompanies } from './models';
+import { UpdateCompaniesRequest, DefaultCompanies } from './models';
 
 @Injectable()
 export class CompaniesService {
@@ -12,11 +12,11 @@ export class CompaniesService {
   }
 
   async getCompanDetail(): Promise<Company | null> {
-    let db = await this.prisma.company.findUnique({ where: { id: 1 } });
+    const db = await this.prisma.company.findUnique({ where: { id: 1 } });
     if (db === null) {
-      await this.prisma.company.create({ data: DetaultCompanies })
+      await this.prisma.company.create({ data: DefaultCompanies });
     }
-    let newdb = this.prisma.company.findUnique({ where: { id: 1 } });
+    const newdb = this.prisma.company.findUnique({ where: { id: 1 } });
     if (newdb === null) {
       throw NotFoundException;
     }
@@ -24,7 +24,7 @@ export class CompaniesService {
   }
 
   async getCompanyById(id: number): Promise<Company> {
-    let db = await this.prisma.company.findUnique({ where: { id } });
+    const db = await this.prisma.company.findUnique({ where: { id } });
     if (db === null) {
       throw NotFoundException;
     }

@@ -3,13 +3,20 @@ export class NewsResponse {
 
   title: string;
 
-  content: string | null;
+  content: string;
 
   authorId: number | null;
 
-  menuId: number;
+  menuId: number | null;
+
+  menuName: string | null;
 
   createdAt: Date | null;
 
   updatedAt: Date | null;
+}
+
+export class NewsResponsePage {
+  list: NewsResponse[];
+  count: number;
 }

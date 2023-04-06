@@ -1,3 +1,6 @@
 export { CompaniesResponse } from './companies.response';
 
-export { UpdateCompaniesRequest, DetaultCompanies } from './request/companies-request.model';
+export {
+  UpdateCompaniesRequest,
+  DefaultCompanies,
+} from './request/companies-request.model';
