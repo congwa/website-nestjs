@@ -26,7 +26,7 @@ export class OptionalParseIntPipe
           `${metadata.data} is required and must be a number.`,
         );
       } else {
-        return null;
+        return undefined;
       }
     }
 

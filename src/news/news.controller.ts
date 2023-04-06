@@ -62,6 +62,7 @@ export class NewsController {
     @Query('menuId', new OptionalParseIntPipe())
     menuId: number | undefined = undefined,
   ): Promise<News[]> {
+    console.log(pageSize, page, title, menuId);
     const news = await this.newsService.findAll(pageSize, page, {
       title,
       menuId,
