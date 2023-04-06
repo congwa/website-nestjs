@@ -9,7 +9,7 @@ export class NewsService {
 
   async findAll(
     pageSize: number,
-    pageNum: number,
+    page: number,
     filters: { title?: string; menuId?: number },
   ): Promise<{ list: News[]; count: number }> {
     const where: Prisma.NewsWhereInput = {};
@@ -27,7 +27,7 @@ export class NewsService {
     const [list, count] = await Promise.all([
       this.prisma.news.findMany({
         where,
-        skip: (pageNum - 1) * pageSize,
+        skip: (page - 1) * pageSize,
         take: pageSize,
         orderBy: {
           id: 'desc',

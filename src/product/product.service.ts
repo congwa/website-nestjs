@@ -21,7 +21,7 @@ export class ProductService {
 
   async findAll(
     pageSize: number,
-    pageNum: number,
+    page: number,
     filters: { name?: string; menuId?: number },
   ): Promise<{ list: Product[]; count: number }> {
     const where: Prisma.ProductWhereInput = {};
@@ -39,7 +39,7 @@ export class ProductService {
     const [list, count] = await Promise.all([
       this.prisma.product.findMany({
         where,
-        skip: (pageNum - 1) * pageSize,
+        skip: (page - 1) * pageSize,
         take: pageSize,
         orderBy: {
           id: 'desc',

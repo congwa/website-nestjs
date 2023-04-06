@@ -10,6 +10,8 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 // import { PrismaService } from '../common/services/prisma.service';
 import { ProductService } from './product.service';
@@ -23,7 +25,17 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectResponse, UpdateProjectRequest } from './models';
 import { MenuResponsePipe } from '@/core/pipes/menu-response-pipe';
+import { OptionalParseIntPipe } from '@/core/pipes/optional-parse-int-pipe';
 
+@UsePipes(
+  new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }),
+)
 @ApiTags('product')
 @Controller('product')
 export class ProductController {
@@ -64,12 +76,14 @@ export class ProductController {
   })
   @ApiOkResponse({ type: ProjectResponse, isArray: true })
   async findAll(
-    @Query('pageSize') pageSize = 10,
-    @Query('pageNum') pageNum = 1,
+    @Query('pageSize', new OptionalParseIntPipe()) pageSize = 10,
+    @Query('page', new OptionalParseIntPipe()) page = 1,
     @Query('name') name?: string,
-    @Query('menuId') menuId?: number,
+    @Query('menuId', new OptionalParseIntPipe())
+    menuId: number | undefined = undefined,
   ): Promise<Product[]> {
-    const projects = await this.productService.findAll(pageSize, pageNum, {
+    console.log('-----', menuId);
+    const projects = await this.productService.findAll(pageSize, page, {
       name,
       menuId,
     });
@@ -115,8 +129,8 @@ export class ProductController {
   @ApiOkResponse({ type: ProjectResponse, isArray: true })
   async findAllProductsByMenuId(
     @Param('menuId') menuId: number,
-    @Query('page') page = 1, // 设置默认值为1
-    @Query('pageSize') pageSize = 10, // 设置默认值为10
+    @Query('page', new OptionalParseIntPipe()) page = 1, // 设置默认值为1
+    @Query('pageSize', new OptionalParseIntPipe()) pageSize = 10, // 设置默认值为10
   ): Promise<{ list: ProjectResponse[]; count: number }> {
     const result = await this.productService.findAllProductsByMenuId(
       menuId,

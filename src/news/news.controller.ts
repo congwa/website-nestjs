@@ -23,6 +23,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateNewsRequest, NewsResponse, NewsResponsePage } from './models';
 import { MenuResponsePipe } from '@/core/pipes/menu-response-pipe';
+import { OptionalParseIntPipe } from '@/core/pipes/optional-parse-int-pipe';
 
 // ApiOkResponse有坑，使用了ApiOkResponse，那么usePipes处理返回值会有问题
 @ApiTags('news')
@@ -55,12 +56,13 @@ export class NewsController {
   })
   @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findAll(
-    @Query('pageSize') pageSize = 10,
-    @Query('pageNum') pageNum = 1,
+    @Query('pageSize', new OptionalParseIntPipe()) pageSize = 10,
+    @Query('page', new OptionalParseIntPipe()) page = 1,
     @Query('title') title?: string,
-    @Query('menuId') menuId?: number,
+    @Query('menuId', new OptionalParseIntPipe())
+    menuId: number | undefined = undefined,
   ): Promise<News[]> {
-    const news = await this.newsService.findAll(pageSize, pageNum, {
+    const news = await this.newsService.findAll(pageSize, page, {
       title,
       menuId,
     });
@@ -116,8 +118,8 @@ export class NewsController {
   @ApiOkResponse({ type: NewsResponse, isArray: true })
   async findUsePageByMenuId(
     @Param('menuId') menuId: number,
-    @Query('page') page = 1,
-    @Query('pageSize') pageSize = 10,
+    @Query('page', new OptionalParseIntPipe()) page = 1,
+    @Query('pageSize', new OptionalParseIntPipe()) pageSize = 10,
   ): Promise<NewsResponsePage> {
     return this.newsService.findUsePageByMenuId(menuId, { page, pageSize });
   }

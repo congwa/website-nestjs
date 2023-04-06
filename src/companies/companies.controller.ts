@@ -51,7 +51,6 @@ export class CompaniesController {
     @Param('id') id: number,
     @Body() data: UpdateCompaniesRequest,
   ): Promise<Company> {
-    console.log(data, '-------------------------------');
     return this.companiesService.updateCompany(id, data);
   }
 
