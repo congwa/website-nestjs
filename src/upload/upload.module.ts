@@ -4,8 +4,10 @@ import { UploadController } from './upload.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { PassportModule } from '@nestjs/passport';
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     MulterModule.register({
       storage: diskStorage({
         destination: join(__dirname, '../static'),
