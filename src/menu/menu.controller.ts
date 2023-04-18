@@ -10,7 +10,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
-  UseFilters
+  UseFilters,
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu } from '@prisma/client';
@@ -34,6 +34,18 @@ export class MenuController {
   @ApiOkResponse({ type: MenuResponse })
   async findById(@Param('id') id: number): Promise<Menu | null> {
     return this.menuService.findById(id);
+  }
+
+  @Get('children/:parentId')
+  @ApiOkResponse({ type: MenuResponse, isArray: true })
+  async getAllMenuChildren(@Param('parentId') parentId: number) {
+    return this.menuService.getAllMenuChildrenFlat(parentId);
+  }
+
+  @Get('children/tree/:parentId')
+  @ApiOkResponse({ type: MenuResponse, isArray: true })
+  async getAllMenuChildrenTree(@Param('parentId') parentId: number) {
+    return this.menuService.getAllMenuChildrenTree(parentId);
   }
 
   @Post()

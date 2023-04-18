@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../common/services/prisma.service';
 import { Menu, Prisma } from '@prisma/client';
+import { MenuResponseLevel } from './models';
 
 @Injectable()
 export class MenuService {
@@ -21,6 +22,50 @@ export class MenuService {
     return db;
   }
 
+  async getAllMenuChildrenTree(parentId: number): Promise<any> {
+    const parentMenu = await this.prisma.menu.findUnique({
+      where: { id: parentId },
+    });
+    const getMenu = async (parentId) => {
+      const childMenus = await this.prisma.menu.findMany({
+        where: {
+          parentId: parentId,
+        },
+      });
+      const childMenusWithChildren = await Promise.all(
+        childMenus.map(async (childMenu) => ({
+          ...childMenu,
+          children: await getMenu(childMenu.id),
+        })),
+      );
+      return childMenusWithChildren;
+    };
+
+    return { ...parentMenu, children: getMenu(parentId) };
+  }
+
+  async getAllMenuChildrenFlat(parentId: number): Promise<MenuResponseLevel[]> {
+    const menuStack: any = [{ id: parentId, level: 0 }];
+    const flatMenuList: MenuResponseLevel[] = [];
+    while (menuStack.length > 0) {
+      const { id, level } = menuStack.pop();
+      const menu = await this.prisma.menu.findUnique({ where: { id: id } });
+      const flatMenu: MenuResponseLevel = {
+        ...menu,
+        level: level,
+      } as MenuResponseLevel;
+      flatMenuList.push(flatMenu);
+      const childMenus = await this.prisma.menu.findMany({
+        where: {
+          parentId: id,
+        },
+      });
+      childMenus.forEach((childMenu) => {
+        menuStack.push({ id: childMenu.id, level: level + 1 });
+      });
+    }
+    return flatMenuList;
+  }
   async create(data: Prisma.MenuCreateInput): Promise<Menu> {
     return this.prisma.menu.create({ data });
   }

@@ -7,3 +7,7 @@ export class MenuResponse {
 
   parentId: number | null;
 }
+
+export class MenuResponseLevel extends MenuResponse {
+  level: number;
+}
