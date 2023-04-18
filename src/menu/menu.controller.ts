@@ -10,12 +10,14 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  UseFilters
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu } from '@prisma/client';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateMenuRequest, MenuResponse } from './models';
+import { MenuWhiteFilter } from '@/core/filter/menu-white/menu-white.filter';
 
 @ApiTags('menu')
 @Controller('menu')
@@ -38,6 +40,7 @@ export class MenuController {
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
+  @UseFilters(new MenuWhiteFilter())
   @ApiOkResponse({ type: MenuResponse })
   async create(@Body() data: UpdateMenuRequest): Promise<Menu> {
     return this.menuService.create(data);
@@ -47,6 +50,7 @@ export class MenuController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: MenuResponse })
   @UseGuards(AuthGuard())
+  @UseFilters(new MenuWhiteFilter())
   async update(
     @Param('id') id: number,
     @Body() data: UpdateMenuRequest,
@@ -58,6 +62,7 @@ export class MenuController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: MenuResponse })
   @UseGuards(AuthGuard())
+  @UseFilters(new MenuWhiteFilter())
   async delete(@Param('id') id: number): Promise<Menu | null> {
     return this.menuService.delete(id);
   }
