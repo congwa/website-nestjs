@@ -3,6 +3,10 @@ export class NewsResponse {
 
   title: string;
 
+  subTitle: string | null;
+
+  image: string | null;
+
   content: string;
 
   authorId: number | null;

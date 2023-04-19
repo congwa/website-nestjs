@@ -5,6 +5,10 @@ export class UpdateProjectRequest {
   @MaxLength(20)
   name: string;
 
+  @IsOptional()
+  @MaxLength(500)
+  subName: string;
+
   @IsNotEmpty()
   description: string;
 

@@ -3,6 +3,8 @@ export class ProjectResponse {
 
   name: string;
 
+  subName: string | null;
+
   description: string;
 
   price: number | null;
