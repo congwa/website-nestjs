@@ -73,9 +73,21 @@ export class NewsService {
       },
     });
     return menuList.map(
-      ({ id, title, content, authorId, createdAt, updatedAt, menu }) => ({
+      ({
         id,
         title,
+        subTitle,
+        image,
+        content,
+        authorId,
+        createdAt,
+        updatedAt,
+        menu,
+      }) => ({
+        id,
+        title,
+        subTitle,
+        image,
         content,
         authorId,
         createdAt,
@@ -108,9 +120,21 @@ export class NewsService {
     ]);
 
     const news: NewsResponse[] = newsList.map(
-      ({ id, title, content, authorId, createdAt, updatedAt, menu }) => ({
+      ({
         id,
         title,
+        subTitle,
+        image,
+        content,
+        authorId,
+        createdAt,
+        updatedAt,
+        menu,
+      }) => ({
+        id,
+        title,
+        subTitle,
+        image,
         content,
         authorId,
         createdAt,

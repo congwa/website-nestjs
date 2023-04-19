@@ -97,9 +97,10 @@ export class ProductService {
       }),
     ]);
     const projectList: ProjectResponse[] = products.map(
-      ({ id, name, description, price, image, menu }) => ({
+      ({ id, name, subName, description, price, image, menu }) => ({
         id,
         name,
+        subName,
         description,
         price,
         image,
