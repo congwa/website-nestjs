@@ -69,7 +69,12 @@ export class UploadController {
 
     const outputFilePath = `${file.destination}/${filename}`;
     // 调用图片处理函数处理并压缩图片
-    await compressAndConvertToWebP(file.path, outputFilePath);
+    try {
+      await compressAndConvertToWebP(file.path, outputFilePath);
+    } catch (error) {
+      console.log(error)
+    }
+    
     // 返回上传成功信息及处理好的图片 URL
     return {
       url: `/uploads/${filename}`, // 文件路径

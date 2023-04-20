@@ -46,7 +46,7 @@ specifiers:
   figlet: ^1.5.2
   helmet: ^5.1.1
   husky: ^8.0.1
-  image-lossless-compressor: 1.0.3-commonjs
+  image-lossless-compressor: 1.0.5-commonjs
   ioredis: ^5.2.2
   jest: ^28.1.3
   jest-extended: 3.0.2
@@ -103,7 +103,7 @@ dependencies:
   dotenv: 16.0.3
   dotenv-cli: 6.0.0
   helmet: 5.1.1
-  image-lossless-compressor: 1.0.3-commonjs_typescript@4.9.5
+  image-lossless-compressor: 1.0.5-commonjs_typescript@4.9.5
   ioredis: 5.3.1
   multer: 1.4.5-lts.1
   nanoid: 3.3.4
@@ -4843,14 +4843,14 @@ packages:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
 
-  /image-lossless-compressor/1.0.3-commonjs_typescript@4.9.5:
-    resolution: {integrity: sha512-Nqi0GT1rYEXZ7R/RURuGwWUtj84vJ9CVPxuNlhxC1s3/furnuPp9hIutjt2GLwvFJtrzhwXzwSf6sGiob7w73w==}
+  /image-lossless-compressor/1.0.5-commonjs_typescript@4.9.5:
+    resolution: {integrity: sha512-wWESGS3MuValDJyH0QgVVSjWKgfxs1kbrVLCQK6xd0/KZXPwScXzT3PLHT/NrWzViXuBPWAza8q2M1l4Ra3RuQ==}
     engines: {node: '>=16'}
     dependencies:
       '@types/node': 16.18.23
       imagemin: 7.0.1
       imagemin-mozjpeg: 9.0.0
-      imagemin-oxipng-include-oxipng-bin: 1.0.0
+      imagemin-oxipng-include-oxipng-bin: 3.0.0
       imagemin-webp: 6.1.0
       sharp: 0.32.0
       ts-node: 10.9.1_mwktwrqic243a56fotetixsg4q
@@ -4869,8 +4869,8 @@ packages:
       mozjpeg: 7.1.1
     dev: false
 
-  /imagemin-oxipng-include-oxipng-bin/1.0.0:
-    resolution: {integrity: sha512-T1WDhYYK9JONwpLIv++bWrLiPAsyNjZazzdyedN2tNsyNJ4PJtbC6PPduVXF89XLSXCl+IHmYbBPNVr2VABgJw==}
+  /imagemin-oxipng-include-oxipng-bin/3.0.0:
+    resolution: {integrity: sha512-V/scoZaUPPiCj+srElOF7mZGFs4fTtNAHwDNiGiyOPioMUx/4Nrz82tOKwRYybxPxJekfi9adeSMKNdDB45T/w==}
     engines: {node: '>=10'}
     dependencies:
       bin-build: 3.0.0
