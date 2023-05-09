@@ -16,6 +16,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 // import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthGuard } from '@nestjs/passport';
+import { QiniuService, util } from 'nest-qiniu-sdk';
+import qiniu from 'qiniu';
 
 import { compressAndConvertToWebP } from 'image-lossless-compressor';
 import {
@@ -25,11 +27,15 @@ import {
   ApiResponse,
   ApiOperation,
 } from '@nestjs/swagger';
+// import config from '@/config';
 
 @ApiTags('upload')
 @Controller('upload')
 export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+  constructor(
+    private readonly uploadService: UploadService,
+    private readonly QiniuService: QiniuService,
+  ) {}
 
   @ApiOperation({ summary: '上传相册图片' })
   @ApiResponse({ status: 200, description: '文件上传成功' })
@@ -72,9 +78,61 @@ export class UploadController {
     try {
       await compressAndConvertToWebP(file.path, outputFilePath);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
+
+    const localFile = outputFilePath;
+    const options = this.QiniuService.getOptions(),
+      access_key = this.QiniuService.getOptions('access_key'),
+      secret_key = this.QiniuService.getOptions('secret_key'),
+      zone = this.QiniuService.getZone(),
+      bucket = this.QiniuService.getBucket(),
+      domain = this.QiniuService.getDomain();
+
+    const formUploader = this.QiniuService.formUploader();
+
+    const key = filename,
+      // 过期时间 60秒
+      expires = 60;
+
+    /**
+     * 获取上传 token
+     * https://developer.qiniu.com/kodo/1206/put-policy
+     */
+    const uploadToken = this.QiniuService.getUploadToken({
+      scope: bucket,
+      insertOnly: 1,
+      expires,
+      // ...
+    });
+
+    const putFile = () => {
+      return new Promise((resolve, reject) => {
+        const putExtra = new qiniu.form_up.PutExtra();
+        formUploader.putFile(
+          uploadToken,
+          key,
+          localFile,
+          putExtra,
+          function (respErr, respBody, respInfo) {
+            if (respErr) {
+              throw respErr;
+            }
+            if (respInfo.statusCode == 200) {
+              console.log(respInfo);
+              resolve(respInfo);
+            } else {
+              console.log(respInfo.statusCode);
+              console.log(respInfo);
+              reject(respInfo);
+            }
+          },
+        );
+      });
+    };
+
+    const obj = await putFile();
+    console.log(obj);
     // 返回上传成功信息及处理好的图片 URL
     return {
       url: `/uploads/${filename}`, // 文件路径

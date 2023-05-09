@@ -112,4 +112,8 @@ export default {
     // disable throwing uncaughtException if an error event is emitted and it has no listeners
     ignoreErrors: false,
   },
+  qiniu: {
+    accessKey: 'cHJiRBpkcaehIgrgzEvmdF6xp633BnJRPFXu5Hxb',
+    secretKey: '6uF2g_qVE9dCKVboPW96RsjxxNZJZQjn1klPQdY9',
+  },
 };
