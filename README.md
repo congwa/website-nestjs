@@ -41,7 +41,7 @@ You can also look at my [Angular Hackathon Starter](https://github.com/ahmetuysa
 3. Move to the appropriate directory: `cd <YOUR_PROJECT_NAME>`.
 4. Run `yarn` to install dependencies.
 
-### Configuration Files
+### Configuration Files1
 
 #### [Prisma](https://github.com/prisma/prisma) Configurations
 
