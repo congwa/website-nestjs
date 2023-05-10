@@ -119,11 +119,11 @@ export class UploadController {
               throw respErr;
             }
             if (respInfo.statusCode == 200) {
-              console.log(respInfo);
-              resolve(respInfo);
+              console.log(respInfo.data, respBody);
+              resolve(respBody);
             } else {
-              console.log(respInfo.statusCode);
-              console.log(respInfo);
+              // console.log(respInfo.statusCode);
+              // console.log(respInfo);
               reject(respInfo);
             }
           },
@@ -131,11 +131,11 @@ export class UploadController {
       });
     };
 
-    const obj = await putFile();
+    const obj: any = await putFile();
     console.log(obj);
     // 返回上传成功信息及处理好的图片 URL
     return {
-      url: `/uploads/${filename}`, // 文件路径
+      url: obj.key, // 文件路径
       notCompress: file.filename, // 未压缩图盘路径
       originalname: file.originalname, // 文件原名
       // size: file.size, // 文件大小
